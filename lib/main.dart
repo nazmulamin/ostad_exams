@@ -1,78 +1,117 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Photo Gallery',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Photo Gallery'),
+      home: MyPage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required String title}) : super(key: key);
-
-  @override
+class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
-    return Scaffold(
+    return (Scaffold(
       appBar: AppBar(
-        title: const Text('My Shopping List'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('Cart is Empty')));
-            },
+        title: Text("Counter App"),
+        backgroundColor: Colors.black,
+      ),
+      body: Center(
+        child: ButtonDemo(),
+      ),
+    ));
+  }
+}
+
+class ButtonDemo extends StatefulWidget {
+  //ButtonDemo({Key key}) : super(key: key);
+  _ButtonDemoState createState() => _ButtonDemoState();
+}
+
+class _ButtonDemoState extends State<ButtonDemo> {
+  var number = 0;
+  var color = Colors.black;
+  Widget build(BuildContext context) {
+    return (Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "Counter Value",
           ),
+          Text(
+            '$number',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color,
+              fontSize: 160.0,
+              fontFamily: 'Roboto',
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              RawMaterialButton(
+                fillColor: Colors.green,
+                splashColor: Colors.greenAccent,
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const <Widget>[
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: _add,
+                shape: const StadiumBorder(),
+              ),
+              RawMaterialButton(
+                fillColor: Colors.red,
+                splashColor: Colors.redAccent,
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const <Widget>[
+                      Icon(
+                        Icons.remove,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: _minus,
+                shape: const StadiumBorder(),
+              )
+            ],
+          )
         ],
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: const [
-                ListTile(
-                  leading: Icon(Icons.shopping_bag),
-                  title: Text('Apples'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.shopping_bag),
-                  title: Text('Bananas'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.shopping_bag),
-                  title: Text('Bread'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.shopping_bag),
-                  title: Text('Milk'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.shopping_bag),
-                  title: Text('Eggs'),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+    ));
+  }
+
+  _add() {
+    setState(() {
+      number = number + 1;
+    });
+  }
+
+  _minus() {
+    setState(() {
+      number = number - 1;
+    });
   }
 }
